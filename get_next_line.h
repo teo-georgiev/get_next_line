@@ -6,7 +6,7 @@
 /*   By: tgeorgie <tgeorgie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/17 09:33:05 by tgeorgie          #+#    #+#             */
-/*   Updated: 2023/11/17 10:42:21 by tgeorgie         ###   ########.fr       */
+/*   Updated: 2023/11/20 08:42:10 by tgeorgie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 # include <fcntl.h>
 
 # ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 1024;
+#  define BUFFER_SIZE 1024
 # endif
 
 char    *get_next_line(int fd);
