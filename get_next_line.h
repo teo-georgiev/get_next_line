@@ -17,8 +17,14 @@
 # include <fcntl.h>
 
 # ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 1024
+#  define BUFFER_SIZE 10
 # endif
+
+typedef struct	s_list
+{
+	char			*str_buf;
+	struct s_list	*next;
+}	t_list;
 
 char    *get_next_line(int fd);
 
