@@ -21,10 +21,12 @@
 #  define BUFFER_SIZE 1024
 # endif
 
-/* GET_NEW_LINE utility functions */
-size_t  f_strlen(char *s);
-
 /* GET_NEW_LIME control functions */
 char    *get_next_line(int fd);
 
+/* GET_NEW_LINE utility functions */
+size_t  f_strlen(char *s);
+void	*f_memmove(void *dst, const void *src, size_t len);
+size_t     f_search_nl(char *buf);
+char    *f_strjoin(char *s1, char *s2);
 #endif
