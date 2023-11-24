@@ -16,6 +16,7 @@
 # include <unistd.h>
 # include <fcntl.h>
 # include <stdlib.h>
+#include <stdio.h> // <<<< REMOVE
 
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 1024
@@ -26,7 +27,7 @@ char    *get_next_line(int fd);
 
 /* GET_NEW_LINE utility functions */
 size_t  f_strlen(char *s);
+size_t  f_search_nl(char *buf);
 void	*f_memmove(void *dst, const void *src, size_t len);
-size_t     f_search_nl(char *buf);
 char    *f_strjoin(char *s1, char *s2);
 #endif

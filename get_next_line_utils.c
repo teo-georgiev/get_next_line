@@ -54,25 +54,20 @@ char    *f_strjoin(char *s1, char *s2)
     int     j;
     char    *new_s;
 
-    i = 0;
-    j = 0;
+    i = -1;
+    j = -1;
     new_s = (char *)malloc((f_strlen(s1) + f_strlen(s2) + 1) * sizeof(char));
-    while (s1 && s1[i])
-    {
+    if (!s1)
+        return (new_s = s2);
+    while (s1[++i])
         new_s[i] = s1[i];
-        i++;
-    }
-    while (s2[j])
+    while (s2[++j])
     {
-        if (s2[j] == '\n')
-        {
-            new_s[i + j] = '\n';
-            break ;
-        }
         new_s[i + j] = s2[j];
-        j++;
+        if (s2[j] == '\n')
+            break ;
     }
-    new_s[i + j] = '\0';
+    new_s[i + j + 1] = '\0';
     return (new_s);
 }
 

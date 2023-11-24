@@ -24,7 +24,12 @@ int main(void)
         close(fd);
         return (0);
     }
+
+    int n = 1;
     while ((line = get_next_line(fd)))
-        printf("1__ %s", line);
+    {
+        printf("\n3 --->\n%s\n", line);
+        n++;
+    }
     return (0);
 }
