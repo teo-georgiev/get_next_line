@@ -6,7 +6,7 @@
 /*   By: tgeorgie <tgeorgie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/17 09:32:41 by tgeorgie          #+#    #+#             */
-/*   Updated: 2023/11/20 08:34:21 by tgeorgie         ###   ########.fr       */
+/*   Updated: 2023/11/29 15:56:18 by tgeorgie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,14 +20,9 @@ int main(void)
 
     fd = open("bible.txt", O_RDONLY);
     if (fd == -1)
-    {
         close(fd);
-        return (0);
-    }
-
-    while ((line = get_next_line(fd)))
-    {
-        printf("\n3 --->\n%s\n", line);
-    }
+    else 
+        while ((line = get_next_line(fd)))
+            printf("-> %s", line);
     return (0);
 }

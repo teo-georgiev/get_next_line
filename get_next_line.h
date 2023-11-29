@@ -6,7 +6,7 @@
 /*   By: tgeorgie <tgeorgie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/22 16:21:59 by tgeorgie          #+#    #+#             */
-/*   Updated: 2023/11/22 16:55:40 by tgeorgie         ###   ########.fr       */
+/*   Updated: 2023/11/29 15:42:37 by tgeorgie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +22,20 @@
 #  define BUFFER_SIZE 1024
 # endif
 
+typedef struct  s_list 
+{
+    char            *content;
+    struct s_list   *next;
+}   t_list;
+
+/* GET_NEW_LINE utility functions */
+size_t  fn_len_to_newline(t_list *read_list);
+char    *fn_strdup(char *s1);
+t_list  *fn_find_lastnode(t_list *read_text);
+void    fn_add_node(char *buf, t_list **read_text);
+size_t  fn_has_newline(t_list *read_text);
+
 /* GET_NEW_LIME control functions */
 char    *get_next_line(int fd);
 
-/* GET_NEW_LINE utility functions */
-size_t  f_strlen(char *s);
-size_t  f_search_nl(char *buf);
-void	*f_memmove(void *dst, const void *src, size_t len);
-char    *f_strjoin(char *s1, char *s2);
 #endif

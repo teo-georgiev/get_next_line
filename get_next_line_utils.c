@@ -6,84 +6,84 @@
 /*   By: tgeorgie <tgeorgie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/22 16:25:44 by tgeorgie          #+#    #+#             */
-/*   Updated: 2023/11/22 16:54:32 by tgeorgie         ###   ########.fr       */
+/*   Updated: 2023/11/29 16:03:19 by tgeorgie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-size_t  f_strlen(char *s)
+size_t  fn_has_newline(t_list *read_list)
 {
-    int len;
+    size_t  i;
+    size_t  len;
 
     len = 0;
-    if (!s)
+    if (!read_list)
         return (0);
-    while (s[len])
-        len++;
-    return (len);
-}
-
-void	*f_memmove(void *dst, const void *src, size_t len)
-{
-	size_t			i;
-
-	i = 0;
-	if (dst > src)
-	{
-		while (len > 0)
-		{
-			((unsigned char *)dst)[len - 1] = ((unsigned char *)src)[len - 1];
-			len--;
-		}
-	}
-	else if (dst < src)
-	{
-		while (i < len)
-		{
-			((unsigned char *)dst)[i] = ((unsigned char *)src)[i];
-			i++;
-		}
-	}
-	return (dst);
-}
-
-char    *f_strjoin(char *s1, char *s2)
-{
-    int     i;
-    int     j;
-    char    *new_s;
-
-    i = -1;
-    j = -1;
-    new_s = (char *)malloc((f_strlen(s1) + f_strlen(s2) + 1) * sizeof(char));
-    if (!s1)
-        return (new_s = s2);
-    while (s1[++i])
-        new_s[i] = s1[i];
-    while (s2[++j])
+    while (read_list)
     {
-        new_s[i + j] = s2[j];
-        if (s2[j] == '\n')
-            break ;
-    }
-    new_s[i + j + 1] = '\0';
-    return (new_s);
-}
-
-size_t     f_search_nl(char *buf)
-{
-    int i;
-
-    i = 0;
-    
-    if (buf == NULL)
-        return (0);        
-    while (buf[i])
-    {
-        if (buf[i] == '\n')
-            return (1);
-        i++;
+        i = 0;
+        while (read_list->content[i] && i < BUFFER_SIZE)
+        {
+            if (read_list->content[i] == '\n')
+                return (len + i);
+            i++;
+        }
+        len += i;
+        read_list = read_list->next;
     }
     return (0);
+}
+
+char *fn_strdup(char *source)
+{
+	size_t		i;
+	size_t		len;
+	char		*result;
+
+	len = 0;
+    if (!source)
+        return (NULL);
+    while (source[len])
+        len++;
+	result = malloc((len + 1) * sizeof(char));
+	if (!result)
+    {
+        free(result);
+        return (NULL);
+    }
+	i = -1;
+	while (source[++i] && i < len)
+        result[i] = source[i];
+    result[i] = '\0';
+	return (result);
+}
+
+t_list   *fn_find_lastnode(t_list *read_list)
+{
+    t_list  *last_node;
+
+    last_node = read_list;
+    if (!read_list)
+        return (NULL);
+    while (last_node->next)
+        last_node = last_node->next;
+    return (last_node);
+}
+
+void  fn_add_node(char *buf, t_list **read_list)
+{
+    t_list  *new_node;
+    t_list  *last_node;
+
+    new_node = malloc(sizeof(t_list));
+    if (!new_node)
+        return ;
+    last_node = fn_find_lastnode(*read_list);
+    if (last_node == NULL)
+        *read_list = new_node;
+    else
+        last_node->next = new_node;
+    new_node->content = fn_strdup(buf);
+    new_node->next = NULL;
 }

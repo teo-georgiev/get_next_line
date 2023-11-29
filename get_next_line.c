@@ -6,77 +6,143 @@
 /*   By: tgeorgie <tgeorgie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/22 16:20:36 by tgeorgie          #+#    #+#             */
-/*   Updated: 2023/11/22 16:55:45 by tgeorgie         ###   ########.fr       */
+/*   Updated: 2023/11/29 16:11:43 by tgeorgie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-char    *f_clear_string(char *s_read)
+void    fn_dealloc_list(t_list *remain_node, t_list **read_list)
 {
-    char    *tmp;
-    int     i;
-    int     j;
+    t_list  *temp;
+    t_list  *current;
 
-    i = 0;
-    j = 0;
-    while (s_read[i] && s_read[i] != '\n')
-        i++;
-    i++;
-    tmp = (char *)malloc((f_strlen(&s_read[i]) + 1) * sizeof(char));
-    while (s_read[i + j])
+    if (!remain_node || !read_list || !*read_list)
+        return ;
+    current = *read_list;
+    while (current)
     {
-        tmp[j] = s_read[i + j];
-        j++;
+        temp = current;
+        current = current->next;
+        free(temp->content);
+        free(temp);
     }
-    tmp[j] = '\0';
-    printf("\n1 --->\n%s\n", tmp);
-    free(s_read);
-    return (tmp);
+    *read_list = remain_node;
 }
 
-char    *f_read_text(int fd, char *s_read)
+void fn_clean_list(t_list **read_list)
 {
-    int     nbr_read;
-    char    *buf;
+    size_t  i;
+    char    *remain_str;
+    t_list  *last_node;
+    t_list  *remain_node;
 
-    buf = NULL;
-    nbr_read = 0;
-    if (fd < 0 || read(0, buf, 0) < 0)
+    i = 0;
+    last_node = fn_find_lastnode(*read_list);
+    while (last_node->content[i] && last_node->content[i] != '\n')
+        i++;
+    remain_str = fn_strdup(&(last_node->content[++i]));
+    remain_node = malloc(sizeof(t_list));
+    if (!remain_node || !remain_str)
+        return ;
+    remain_node->content = remain_str;
+    remain_node->next = NULL;
+    fn_dealloc_list(remain_node, read_list);
+}
+
+char    *fn_get_line(t_list *read_list)
+{
+    char    *new_line;
+    size_t  i;
+    size_t  j;
+    size_t  len;
+    
+    if (!read_list)
         return (NULL);
-    while (!f_search_nl(buf))
+    j = 0;
+    len = fn_has_newline(read_list);
+    new_line = (char *)malloc((len + 1) * sizeof(char));
+    if (!new_line)
+        return (NULL);
+    while (read_list)
     {
-        buf = (char *)malloc((BUFFER_SIZE + 1) * sizeof(char));
+        i = 0;
+        while (read_list->content[i])
+        {
+            if (read_list->content[i] == '\n')
+            {
+                new_line[j++] = '\n';
+                new_line[j] = '\0';
+                return (new_line);
+            }
+            new_line[j++] = read_list->content[i++];
+        }
+        read_list = read_list->next;
+    }
+    new_line[j] = '\0';
+    return (new_line);
+}
+
+t_list   *fn_read_list(int fd, t_list **read_list)
+{
+    char    *buf;
+    int     nbr_read;
+
+    nbr_read = 0;
+    while (!fn_has_newline(*read_list))
+    {
+        buf = malloc(BUFFER_SIZE + 1);
+        if (!buf)
+            return (NULL);
         nbr_read = read(fd, buf, BUFFER_SIZE);
-        if (nbr_read <= 0)
+        if (!nbr_read)
         {
             free(buf);
             return (NULL);
         }
         buf[nbr_read] = '\0';
-        s_read = f_strjoin(s_read, buf);
+        fn_add_node(buf, read_list);
     }
-    free(buf);
-    return (s_read);
+    return (*read_list);
 }
 
 char    *get_next_line(int fd)
 {
-    static char *s_read;
-    char        *new_line;
+    static t_list   *read_list;
+    char            *new_line;
 
-    s_read = f_read_text(fd, s_read);
-    if (s_read == NULL)
+    if (fd < 0 || read(fd, &new_line, 0) < 0 || BUFFER_SIZE <= 0)
         return (NULL);
-    new_line = (char *)malloc((f_strlen(s_read) + 1) * sizeof(char));
-    new_line = f_memmove(new_line, s_read, f_strlen(s_read));
-    s_read = f_clear_string(s_read);
-    printf("\nnew line --->\n%s\n", new_line);
-    printf("\n2 --->\n%s\n", s_read);
+    read_list = fn_read_list(fd, &read_list);
+    if (!read_list)
+        return (NULL);
+    new_line = fn_get_line(read_list);
+    fn_clean_list(&read_list);
     return (new_line);
 }
 
-// read characters
-// move characters from s_read to next_line
-// empty chars that have been moved
 
+// void fn_clean_list(t_list **read_list)
+// {
+//     size_t  i;
+//     size_t  j;
+//     char    *remain_str;
+//     t_list  *last_node;
+//     t_list  *remain_node;
+
+//     i = 0;
+//     j = 0;
+//     remain_node = (t_list *)malloc(sizeof(t_list));
+//     remain_str = (char *)malloc((BUFFER_SIZE + 1) * sizeof(char));
+//     if (!remain_node || !remain_str)
+//         return ;
+//     last_node = fn_find_lastnode(*read_list);
+//     while (last_node->content[i] && last_node->content[i] != '\n')
+//         i++;
+//     while (last_node->content[i] && last_node->content[++i])
+//         remain_str[j++] = last_node->content[i];
+//     remain_str[j] = '\0';
+//     remain_node->content = remain_str;
+//     remain_node->next = NULL;
+//     fn_dealloc_list(remain_node, read_list);
+// }

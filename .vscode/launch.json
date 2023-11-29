@@ -1,0 +1,13 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "C/C++ Runner: Debug Session",
+      "type": "lldb",
+      "request": "launch",
+      "args": [],
+      "cwd": "/Users/tgeorgie/projects/get_next_line_personal",
+      "program": "/Users/tgeorgie/projects/get_next_line_personal/build/Debug/outDebug"
+    }
+  ]
+}
