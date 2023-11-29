@@ -40,10 +40,10 @@ char    *f_read_text(int fd, char *s_read)
     int     nbr_read;
     char    *buf;
 
+    buf = NULL;
+    nbr_read = 0;
     if (fd < 0 || read(0, buf, 0) < 0)
         return (NULL);
-    nbr_read = 0;
-    buf = NULL;
     while (!f_search_nl(buf))
     {
         buf = (char *)malloc((BUFFER_SIZE + 1) * sizeof(char));

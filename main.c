@@ -25,11 +25,9 @@ int main(void)
         return (0);
     }
 
-    int n = 1;
     while ((line = get_next_line(fd)))
     {
         printf("\n3 --->\n%s\n", line);
-        n++;
     }
     return (0);
 }
