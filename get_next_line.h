@@ -29,8 +29,8 @@ typedef struct  s_list
 }   t_list;
 
 /* GET_NEW_LINE utility functions */
-size_t  fn_len_to_newline(t_list *read_list);
-char    *fn_strdup(char *s1);
+size_t  fn_len_newline(t_list *read_list);
+char *fn_strdup(char *dst, char *src);
 t_list  *fn_find_lastnode(t_list *read_text);
 void    fn_add_node(char *buf, t_list **read_text);
 size_t  fn_has_newline(t_list *read_text);

@@ -16,13 +16,15 @@
 int main(void)
 {
     int fd;
+    int i;
     char *line;
 
     fd = open("bible.txt", O_RDONLY);
+    i = 1;
     if (fd == -1)
         close(fd);
     else 
         while ((line = get_next_line(fd)))
-            printf("-> %s", line);
+            printf("%d-> %s", i++, line);
     return (0);
 }
