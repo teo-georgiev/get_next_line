@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: teogeorgiev <teogeorgiev@student.42.fr>    +#+  +:+       +#+        */
+/*   By: tgeorgie <tgeorgie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/17 09:32:41 by tgeorgie          #+#    #+#             */
-/*   Updated: 2023/11/30 17:37:11 by teogeorgiev      ###   ########.fr       */
+/*   Updated: 2023/12/01 11:59:22 by tgeorgie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,9 @@ int main(void)
         close(fd);
     else 
         while ((line = get_next_line(fd)))
-            printf("%d-> %s", i++, line);
+        {
+            printf("%d->\t%s", i++, line);
+            free(line);
+        }
     return (0);
 }

@@ -5,81 +5,80 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: tgeorgie <tgeorgie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/22 16:25:44 by tgeorgie          #+#    #+#             */
-/*   Updated: 2023/11/29 16:03:19 by tgeorgie         ###   ########.fr       */
+/*   Created: 2023/11/30 16:17:43 by teogeorgiev       #+#    #+#             */
+/*   Updated: 2023/12/01 14:36:37 by tgeorgie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-size_t  fn_has_newline(t_list *scan_list)
+size_t    no_newline(char *buf)
 {
-    size_t  i;
+    int i;
 
-    if (!scan_list)
+    i = 0;
+    
+    if (buf == NULL)
         return (0);
-    while (scan_list)
+    while (buf[i])
     {
-        i = 0;
-        while (scan_list->content[i] && i < BUFFER_SIZE)
-        {
-            if (scan_list->content[i] == '\n')
-                return (1);
-            i++;
-        }
-        scan_list = scan_list->next;
+        if (buf[i] == '\n')
+            return (1);
+        i++;
     }
     return (0);
 }
 
-size_t  fn_len_newline(t_list *scan_list)
+size_t  get_len(char *s)
 {
-    size_t  i;
-    size_t  len;
+    size_t len;
 
     len = 0;
-    if (!scan_list)
-        return (0);
-    while (scan_list)
-    {
-        i = 0;
-        while (scan_list->content[i] && i < BUFFER_SIZE)
-        {
-            if (scan_list->content[i] == '\n')
-                return (len + i);
-            i++;
-        }
-        len += i;
-        scan_list = scan_list->next;
-    }
+    while (s[len])
+        len++;
     return (len);
 }
 
-t_list   *fn_find_lastnode(t_list *scan_list)
+char    *text_join(char *s1, char *s2)
 {
-    t_list  *last_node;
+    int     i;
+    int     j;
+    char    *temp;
 
-    last_node = scan_list;
-    if (!scan_list)
+    i = 0;
+    if (!s1 || !s2)
         return (NULL);
-    while (last_node->next)
-        last_node = last_node->next;
-    return (last_node);
+    if (!(temp = malloc((get_len(s1) + get_len(s2) + 1) * sizeof(char))))
+        return (NULL);
+    while (s1[i])
+    {
+        temp[i] = s1[i];
+        i++;
+    }
+    j = 0;
+    while (s2[j])
+        temp[i++] = s2[j++];
+    temp[i] = '\0';
+    return (temp);
 }
 
-void  fn_add_node(char *buf, t_list **scan_list)
+char *str_cpy(char *source, char *line, int len)
 {
-    t_list  *new_node;
-    t_list  *last_node;
+    int i;
 
-    last_node = fn_find_lastnode(*scan_list);
-    new_node = (t_list *)malloc(sizeof(t_list));
-    if (!new_node)
-        return ;
-    if (!last_node)
-        *scan_list = new_node;
-    else
-        last_node->next = new_node;
-    new_node->content = buf;
-    new_node->next = NULL;
+    i = 0;
+    while (source[i] && i < len)
+    {
+        if (source[i] == '\n')
+        {
+            i++;
+            break ;
+        }
+        line[i] = source[i];
+        i++;
+    }
+    if (source[i] == '\n')
+        line[i++] = '\n';
+    line[i] = '\0';
+    return (line);
 }
