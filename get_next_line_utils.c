@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tgeorgie <tgeorgie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: teogeorgiev <teogeorgiev@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 16:17:43 by teogeorgiev       #+#    #+#             */
-/*   Updated: 2023/12/01 14:36:37 by tgeorgie         ###   ########.fr       */
+/*   Updated: 2023/12/03 20:57:01 by teogeorgiev      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

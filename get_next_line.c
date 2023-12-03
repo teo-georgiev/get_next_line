@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tgeorgie <tgeorgie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: teogeorgiev <teogeorgiev@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 16:17:18 by teogeorgiev       #+#    #+#             */
-/*   Updated: 2023/12/01 14:37:25 by tgeorgie         ###   ########.fr       */
+/*   Updated: 2023/12/03 20:58:02 by teogeorgiev      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,10 +46,8 @@ static char	*clean_text(char **source)
 static char	*get_line(char *source)
 {
     char    *line;
-    int     i;
     int     len;
 
-    i = 0;
     len = 0;
     if (!source[0])
         return (NULL);
